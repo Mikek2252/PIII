@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
+import ku.piii.model.MusicMediaPlaylist;
 import ku.piii.mp3.MP3PathToMusicMapper;
 import ku.piii.nio.file.SimpleMp3FileVisitor;
 
@@ -49,6 +50,8 @@ public class MusicServiceImpl implements MusicService {
 
         return collection;
     }
-
-
+    
+    public MusicMediaCollection createPlaylist(String name) {
+        return new MusicMediaPlaylist(name);
+    }
 }

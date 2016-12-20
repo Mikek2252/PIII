@@ -20,10 +20,12 @@
                 <module>HelloTestFX</module>
                 <module>TableViewSample</module>
                 <module>MusicTableViewFxml</module>
+                <module>MusicGUI</module>
             </modules>
         </profile>
     </profiles>
   <modules>
     <module>MusicTableViewFxml</module>
+    <module>MusicGUI</module>
   </modules>
 </project>
