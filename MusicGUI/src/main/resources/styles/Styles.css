@@ -1,0 +1,8 @@
+.button {
+    -fx-font-weight: bold;
+}
+.title {
+    -fx-font: normal 20 Tahoma;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
