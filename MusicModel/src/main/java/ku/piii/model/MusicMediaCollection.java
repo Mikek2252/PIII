@@ -34,4 +34,11 @@ public class MusicMediaCollection {
             throw new RuntimeException("tried to remove an object that wasn't in the list");
         }
     }
+    
+    public List<String> getArtists() {
+        List<String> artist = new ArrayList();
+        for (MusicMedia song: music) {
+        }
+        return artist;
+    }
 }

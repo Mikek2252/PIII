@@ -6,13 +6,15 @@ public class MusicMedia {
         V1, V2
     }
     private String path;
-    private Integer lengthInSeconds;
+    private int lengthInSeconds;
     
     private Id3Version id3Version;
     // retrieves from the ID tag:
     private String title;
     private String year;
     private String genre;
+    private String artist;
+    private String album;
 
     public MusicMedia() {
     }
@@ -48,12 +50,32 @@ public class MusicMedia {
         this.year = year;
     }
 
-    public Integer getLengthInSeconds() {
+    public String getLengthInSeconds() {
+        return String.valueOf(lengthInSeconds);
+    }
+    
+    public int getLength() {
         return lengthInSeconds;
     }
 
-    public void setLengthInSeconds(Integer lengthInSeconds) {
+    public void setLengthInSeconds(int lengthInSeconds) {
         this.lengthInSeconds = lengthInSeconds;
+    }
+    
+    public String getArtist() {
+        return artist;
+    }
+    
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+    
+    public String getAlbum() {
+        return album;
+    }
+    
+    public void setAlbum(String album) {
+        this.album = album;
     }
 
     public Id3Version getId3Version() {

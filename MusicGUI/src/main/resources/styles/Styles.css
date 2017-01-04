@@ -6,3 +6,7 @@
     -fx-alignment: center;
     -fx-text-alignment: center;
 }
+.active {
+    -fx-text-alignment: center;
+    -fx-font: bold 16 Tahoma;
+}

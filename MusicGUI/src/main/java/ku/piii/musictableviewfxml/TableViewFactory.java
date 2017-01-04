@@ -31,9 +31,9 @@ public class TableViewFactory {
     }
     public static List<MusicMediaColumnInfo> makeColumnInfoList() {
         List<MusicMediaColumnInfo> myColumnInfoList = new ArrayList<MusicMediaColumnInfo>();
-        myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Path")
+        myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Artist")
                                              .setMinWidth(200)
-                                             .setProperty("path")
+                                             .setProperty("artist")
         );
         myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Length (secs)")
                                              .setMinWidth(20)
@@ -42,6 +42,10 @@ public class TableViewFactory {
         myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Track Title")
                                              .setMinWidth(100)
                                              .setProperty("title")
+        );
+        myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Album")
+                                             .setMinWidth(100)
+                                             .setProperty("album")
         );
         myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Year")
                                              .setMinWidth(10)

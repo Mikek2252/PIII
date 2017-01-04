@@ -22,22 +22,42 @@
             GridPane.hgrow="always"
             GridPane.vgrow="always">
         <columnConstraints >
-            <ColumnConstraints minWidth="150" maxWidth="150" prefWidth="150"/>
+            <ColumnConstraints minWidth="170" maxWidth="170" prefWidth="170"/>
         </columnConstraints>
-        <GridPane GridPane.columnIndex="0" >
+        
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <padding><Insets top="0" right="10" bottom="0" left="10"/></padding>
+            <Label styleClass="title" text="My Music"
+                alignment="CENTER"
+                prefWidth="150"
+                GridPane.rowIndex="0" > 
+                <padding><Insets top="5" right="0" bottom="5" left="0"/></padding>
+            </Label>
+            <GridPane fx:id="options" GridPane.rowIndex="1" >
+                <Label styleClass="option" text="Songs" GridPane.rowIndex="0"></Label> 
+                <Label styleClass="option" text="Artists" GridPane.rowIndex="1"></Label> 
+                <Label styleClass="option" text="Albums" GridPane.rowIndex="2"></Label> 
+                <Label styleClass="option" text="Genres" GridPane.rowIndex="3"></Label> 
+            </GridPane> 
+           
+        </GridPane>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1" >
+            <padding><Insets top="0" right="10" bottom="0" left="10"/></padding>
             <Label styleClass="title" text="Playlists"
                 alignment="CENTER"
                 prefWidth="150" 
                 GridPane.rowIndex="0" >
+                <padding><Insets top="5" right="0" bottom="5" left="0"/></padding>
             </Label>
-            <ListView fx:id="listView" 
+            <ListView fx:id="playlistView" 
                 GridPane.rowIndex="1">
             </ListView>
             <Button GridPane.rowIndex="3" text="Create Playlist" onAction="#createPlaylistAction" fx:id="playlist" />
         </GridPane> 
         
         <TableView fx:id="tableView" 
-           GridPane.columnIndex="1" 
+           GridPane.columnIndex="1"
+           GridPane.rowSpan="2"  
            GridPane.hgrow="always"
            GridPane.vgrow="always">
         </TableView>

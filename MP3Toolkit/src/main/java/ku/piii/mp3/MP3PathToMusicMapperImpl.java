@@ -16,6 +16,8 @@ public class MP3PathToMusicMapperImpl implements MP3PathToMusicMapper {
 
     private MusicMedia mapTag1(Mp3File mp3, MusicMedia m) {
         ID3v1 tag = mp3.getId3v1Tag();
+        m.setArtist(tag.getArtist());
+        m.setAlbum(tag.getAlbum());
         m.setTitle(tag.getTitle());
         m.setYear(tag.getYear());
         m.setGenre(tag.getGenreDescription());
@@ -25,9 +27,12 @@ public class MP3PathToMusicMapperImpl implements MP3PathToMusicMapper {
 
     private MusicMedia mapTag2(Mp3File mp3, MusicMedia m) {
         ID3v2 tag = mp3.getId3v2Tag();
+        m.setArtist(tag.getArtist());
+        m.setAlbum(tag.getAlbum());
         m.setTitle(tag.getTitle());
         m.setYear(tag.getYear());
         m.setGenre(tag.getGenreDescription());
+        m.setLengthInSeconds(tag.getLength());
         return m;
     }
 

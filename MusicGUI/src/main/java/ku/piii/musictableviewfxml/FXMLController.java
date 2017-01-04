@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
@@ -20,6 +21,7 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ku.piii.model.MusicMedia;
@@ -49,9 +51,10 @@ public class FXMLController implements Initializable {
 
     @FXML
     private TableView<MusicMedia> tableView;
-    
     @FXML
-    private ListView listView;
+    private GridPane options;
+    @FXML
+    private ListView playlistView;
     
     //FX Functions
 
@@ -60,13 +63,15 @@ public class FXMLController implements Initializable {
         final MusicMediaCollection collection = MUSIC_SERVICE
                 .createMusicMediaCollection(Paths.get(pathScannedOnLoad));
         dataForTableView = FXCollections.observableArrayList(collection.getMusic());
-
+        
+        
+        
         dataForTableView.addListener(makeChangeListener(collection));
 
-        List<MusicMediaColumnInfo> myColumnInfoList = TableViewFactory.makeColumnInfoList();
+        List<MusicMediaColumnInfo> songColumnInfo = TableViewFactory.makeColumnInfoList();
 
         tableView.setItems(dataForTableView);
-        TableViewFactory.makeTable(tableView, myColumnInfoList);
+        TableViewFactory.makeTable(tableView, songColumnInfo);
         tableView.setEditable(true);
         // TODO
     }
@@ -82,10 +87,10 @@ public class FXMLController implements Initializable {
         MusicMediaPlaylist playlist = new MusicMediaPlaylist(name);
         playlists.add(playlist);
         
-        int i = listView.getItems().size();
-        listView.getItems().add(i, "Playlist " + (i+1));
-        listView.layout();
-        listView.edit(i);
+        int i = playlistView.getItems().size();
+        playlistView.getItems().add(i, "Playlist " + (i+1));
+        playlistView.layout();
+        playlistView.edit(i);
 
     }
     
@@ -104,15 +109,39 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        listView.setEditable(true);
-        listView.setCellFactory(TextFieldListCell.forListView());
-        listView.setOnEditStart(eh -> {
-            System.out.println("STARTED");
-        });
-        listView.setOnEditCommit( eh -> {
-            System.out.println("COMMITED");
-            listView.layout();
-            eh.consume();
+        playlistView.setEditable(true);
+        playlistView.setCellFactory(TextFieldListCell.forListView());
+        
+        playlistView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+	@Override
+            public void handle(ListView.EditEvent<String> t) {
+                t.getSource().getItems().set(t.getIndex(), t.getNewValue());
+            }
+	});
+        
+        options.setOnMouseClicked((MouseEvent e) -> {
+            String selected = null;
+            for( Node node: options.getChildren()) {
+                if( node instanceof Label) {
+                    if( node.getBoundsInParent().contains(e.getX(),  e.getY())) {
+                        selected =  ((Label) node).textProperty().toString();
+                        node.getStyleClass().add("active");
+                    } else {
+                        node.getStyleClass().remove("active");
+                    }
+                }
+            }
+            
+            switch (selected) {
+                case "Songs":
+                    break;
+                case "Albums":
+                    break;
+                case "Artists":
+                    break;
+                case "Genres":
+                    break;
+            }
         });
     }
 
