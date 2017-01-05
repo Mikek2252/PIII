@@ -58,7 +58,7 @@ public class MusicMedia {
         return lengthInSeconds;
     }
 
-    public void setLengthInSeconds(int lengthInSeconds) {
+    public void setLength(int lengthInSeconds) {
         this.lengthInSeconds = lengthInSeconds;
     }
     

@@ -36,9 +36,32 @@ public class MusicMediaCollection {
     }
     
     public List<String> getArtists() {
-        List<String> artist = new ArrayList();
+        List<String> artists = new ArrayList();
         for (MusicMedia song: music) {
+            if (!artists.contains(song.getArtist())) {
+                artists.add(song.getArtist());
+            }
         }
-        return artist;
+        return artists;
+    }
+    
+    public List<String> getGenres() {
+        List<String> genres = new ArrayList();
+        for (MusicMedia song: music) {
+            if (!genres.contains(song.getGenre())) {
+                genres.add(song.getGenre());
+            }
+        }
+        return genres;
+    }
+    
+    public List<String> getAlbums() {
+        List<String> albums = new ArrayList();
+        for (MusicMedia song: music) {
+            if (!albums.contains(song.getGenre())) {
+                albums.add(song.getGenre());
+            }
+        }
+        return albums;
     }
 }

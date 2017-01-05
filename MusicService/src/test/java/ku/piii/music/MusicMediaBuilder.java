@@ -40,7 +40,7 @@ public class MusicMediaBuilder {
         final MusicMedia musicMedia = new MusicMedia();
         musicMedia.setTitle(title);
         musicMedia.setYear(year);
-        musicMedia.setLengthInSeconds(lengthInSeconds);
+        //musicMedia.setLengthInSeconds(lengthInSeconds);
         musicMedia.setId3Version(id3Version);
         musicMedia.setGenre(genre);
         return musicMedia;

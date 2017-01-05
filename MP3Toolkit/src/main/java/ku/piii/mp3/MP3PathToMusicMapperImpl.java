@@ -32,7 +32,7 @@ public class MP3PathToMusicMapperImpl implements MP3PathToMusicMapper {
         m.setTitle(tag.getTitle());
         m.setYear(tag.getYear());
         m.setGenre(tag.getGenreDescription());
-        m.setLengthInSeconds(tag.getLength());
+        m.setLength(tag.getLength());
         return m;
     }
 

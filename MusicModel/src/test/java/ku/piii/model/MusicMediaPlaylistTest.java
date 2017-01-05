@@ -14,9 +14,10 @@ import org.junit.Test;
 public class MusicMediaPlaylistTest {
     
     
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void newNameIsNull() {
-        
+        String name = null;
+        MusicMediaPlaylist playlist = new MusicMediaPlaylist(name);   
     }
     
     

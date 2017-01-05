@@ -23,6 +23,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
@@ -37,6 +39,8 @@ public class FXMLController implements Initializable {
     
     private final static MusicService MUSIC_SERVICE = MusicServiceFactory.getMusicServiceInstance();
 
+    //GLOBAL VARIABLES
+    int ROW_HEIGHT = 24;
     
     //DATA
     private ObservableList<MusicMedia> dataForTableView;
@@ -52,27 +56,18 @@ public class FXMLController implements Initializable {
     @FXML
     private TableView<MusicMedia> tableView;
     @FXML
-    private GridPane options;
-    @FXML
     private ListView playlistView;
+    @FXML
+    private ListView musicView;
     
     //FX Functions
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        final MusicMediaCollection collection = MUSIC_SERVICE
-                .createMusicMediaCollection(Paths.get(pathScannedOnLoad));
-        dataForTableView = FXCollections.observableArrayList(collection.getMusic());
         
         
         
-        dataForTableView.addListener(makeChangeListener(collection));
 
-        List<MusicMediaColumnInfo> songColumnInfo = TableViewFactory.makeColumnInfoList();
-
-        tableView.setItems(dataForTableView);
-        TableViewFactory.makeTable(tableView, songColumnInfo);
-        tableView.setEditable(true);
         // TODO
     }
 
@@ -91,10 +86,7 @@ public class FXMLController implements Initializable {
         playlistView.getItems().add(i, "Playlist " + (i+1));
         playlistView.layout();
         playlistView.edit(i);
-
     }
-    
-   
     
     @FXML
     private void handleKeyInput(final InputEvent event) {
@@ -109,40 +101,29 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        final MusicMediaCollection collection = MUSIC_SERVICE
+                .createMusicMediaCollection(Paths.get(pathScannedOnLoad));
+        dataForTableView = FXCollections.observableArrayList(collection.getMusic());
+        dataForTableView.addListener(makeChangeListener(collection));
+        
+        List<MusicMediaColumnInfo> songColumnInfo = TableViewFactory.makeColumnInfoList();
+
+        tableView.setItems(dataForTableView);
+        TableViewFactory.makeTable(tableView, songColumnInfo);
+        tableView.setEditable(true);
+        
+        ObservableList<String> musicOptions = FXCollections.observableArrayList (
+        "Songs", "Artists", "Albums", "Genres");
+        musicView.setItems(musicOptions);
+        musicView.setPrefHeight(musicOptions.size() * ROW_HEIGHT + 2);
+        musicView.setOnMouseClicked(SELECT_MUSIC_MENU);
+        
         playlistView.setEditable(true);
         playlistView.setCellFactory(TextFieldListCell.forListView());
+        playlistView.setOnEditCommit(EDIT_PLAYLIST);
         
-        playlistView.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-	@Override
-            public void handle(ListView.EditEvent<String> t) {
-                t.getSource().getItems().set(t.getIndex(), t.getNewValue());
-            }
-	});
-        
-        options.setOnMouseClicked((MouseEvent e) -> {
-            String selected = null;
-            for( Node node: options.getChildren()) {
-                if( node instanceof Label) {
-                    if( node.getBoundsInParent().contains(e.getX(),  e.getY())) {
-                        selected =  ((Label) node).textProperty().toString();
-                        node.getStyleClass().add("active");
-                    } else {
-                        node.getStyleClass().remove("active");
-                    }
-                }
-            }
-            
-            switch (selected) {
-                case "Songs":
-                    break;
-                case "Albums":
-                    break;
-                case "Artists":
-                    break;
-                case "Genres":
-                    break;
-            }
-        });
+        tableView.setOnMouseClicked(PLAY_MUSIC);
+         
     }
 
     private static ListChangeListener<MusicMedia> makeChangeListener(final MusicMediaCollection collection) {
@@ -164,5 +145,37 @@ public class FXMLController implements Initializable {
             }
         };
     }
+    
+    EventHandler<MouseEvent> SELECT_MUSIC_MENU = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println(musicView.getSelectionModel().getSelectedIndex());
+                switch(musicView.getSelectionModel().getSelectedIndex()) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+                //tableView.
+            }
+        };
+    
+    EventHandler<MouseEvent> PLAY_MUSIC = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            
+        }
+    };
+    
+    EventHandler<ListView.EditEvent<String>> EDIT_PLAYLIST = new EventHandler<ListView.EditEvent<String>>() {
+	@Override
+            public void handle(ListView.EditEvent<String> t) {
+                t.getSource().getItems().set(t.getIndex(), t.getNewValue());
+            }
+	};
 
 }

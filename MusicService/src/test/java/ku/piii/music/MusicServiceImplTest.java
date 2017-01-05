@@ -83,7 +83,7 @@ public class MusicServiceImplTest {
         instance.saveMusicMediaCollection(Paths.get(jsonFileToSaveTo), collection1);
         MusicMediaCollection collection2
                 = instance.loadMusicMediaCollection(Paths.get(jsonFileToSaveTo));
-
+        
         boolean comparisonResult = listsAreTheSame(collection1.getMusic(),
                 collection2.getMusic());
         assertEquals(comparisonResult, true);
@@ -136,7 +136,7 @@ public class MusicServiceImplTest {
         }
 
         // now year, genre, year
-        if (item1.getLengthInSeconds() != item2.getLengthInSeconds()) {
+        if (item1.getLength() != item2.getLength()) {
             return false;
         }
 

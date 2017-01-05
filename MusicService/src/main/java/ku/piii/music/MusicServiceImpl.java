@@ -54,4 +54,5 @@ public class MusicServiceImpl implements MusicService {
     public MusicMediaCollection createPlaylist(String name) {
         return new MusicMediaPlaylist(name);
     }
+    
 }

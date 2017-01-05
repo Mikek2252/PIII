@@ -14,6 +14,9 @@ public class MusicMediaPlaylist extends MusicMediaCollection {
     private String playlistName;
     
     public MusicMediaPlaylist(final String name){
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null.");
+        }
         this.playlistName = name;
     }
     

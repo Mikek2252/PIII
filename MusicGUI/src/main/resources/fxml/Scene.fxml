@@ -34,10 +34,9 @@
                 <padding><Insets top="5" right="0" bottom="5" left="0"/></padding>
             </Label>
             <GridPane fx:id="options" GridPane.rowIndex="1" >
-                <Label styleClass="option" text="Songs" GridPane.rowIndex="0"></Label> 
-                <Label styleClass="option" text="Artists" GridPane.rowIndex="1"></Label> 
-                <Label styleClass="option" text="Albums" GridPane.rowIndex="2"></Label> 
-                <Label styleClass="option" text="Genres" GridPane.rowIndex="3"></Label> 
+                <ListView fx:id="musicView" 
+                    GridPane.rowIndex="0">
+                </ListView>
             </GridPane> 
            
         </GridPane>
