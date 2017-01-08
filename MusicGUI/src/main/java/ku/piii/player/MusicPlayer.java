@@ -5,6 +5,9 @@
  */
 package ku.piii.player;
 
+import java.io.File;
+import java.util.Optional;
+import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import ku.piii.model.MusicMedia;
@@ -19,33 +22,85 @@ public class MusicPlayer {
     private MusicMediaCollection playQueue;
     private MediaPlayer mediaPlayer;
     private MusicMedia currentlyPlaying;
-    public MusicPlayer() {
-        
+    
+    Label songLabel, artistLabel, play, pause;
+    
+    public MusicPlayer(Label songLabel, Label artistLabel, Label play, Label pause) {
+        this.songLabel = songLabel;
+        this.artistLabel = artistLabel;
+        this.play = play;
+        this.pause = pause;
     }
     
-    public void PlayNewSong(MusicMedia song) {
-        currentlyPlaying = song;
-        Media songURL = new Media(song.getPath());
-        mediaPlayer = new MediaPlayer(songURL);
-        mediaPlayer.play();
+    public void setPlayQueue(MusicMediaCollection playQueue){
+        this.playQueue = playQueue;
     }
-    public boolean NextTrack() {
-        
-        int trackNo = playQueue.getMusic().indexOf(currentlyPlaying) + 1;
-        
-        if (trackNo > playQueue.getMusic().size()) {
-            throw new IllegalArgumentException("No Next Track");
+    
+    public MusicMediaCollection getPlayQueue(){
+        return playQueue;
+    }
+    
+    public MusicMedia getCurrentlyPlaying() {
+        return currentlyPlaying;
+    }
+    
+    public void pause() {
+        if (mediaPlayer != null) {
+            pause.setVisible(false);
+            play.setVisible(true);
+            mediaPlayer.pause();
         }
-        MusicMedia song = playQueue.getMusic().get(trackNo+1);
-        Media songURL = new Media(song.getPath());
-        mediaPlayer = new MediaPlayer(songURL);
-        currentlyPlaying = song;
-        
-        return true;
     }
     
-    public boolean LastTrack() {
-        return false;
+    public void play() {
+        if (mediaPlayer != null) {
+            pause.setVisible(true);
+            play.setVisible(false);
+            mediaPlayer.play();
+        }
+    }
+    
+    public void play(int trackNo) {
+        play(playQueue.getMusic().get(trackNo));
+    }
+    
+    public void play(MusicMedia song) {
+        if (mediaPlayer != null) { 
+            mediaPlayer.stop();
+            mediaPlayer.pause();
+            mediaPlayer.dispose();
+        }
+        
+        currentlyPlaying = song;
+        songLabel.setText(currentlyPlaying.getTitle());
+        artistLabel.setText(currentlyPlaying.getArtist());
+               
+        File songFile = new File(song.getPath());
+        String songPath = songFile.toURI().toString();
+        Media songURL = new Media(songPath);
+        mediaPlayer = new MediaPlayer(songURL);
+        play();
+        
+        mediaPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.stop();
+                nextTrack();
+            }
+        });   
+    }
+    public void nextTrack() {
+        int trackNo = getTrackNo();
+        if (trackNo >= playQueue.getMusic().size()-1) trackNo = 0;
+        else trackNo++;
+        play(playQueue.getMusic().get(trackNo));
+    }
+    
+    public void previousTrack() {
+        int trackNo = getTrackNo();
+        if (trackNo-1 < 0 ) trackNo = 0;
+        else trackNo--;
+        play(playQueue.getMusic().get(trackNo));
     }
     
     public int getTrackNo() {

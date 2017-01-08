@@ -10,3 +10,7 @@
     -fx-text-alignment: center;
     -fx-font: bold 16 Tahoma;
 }
+
+#playControls .label {
+    -fx-font:  normal 28 Tahoma;
+}

@@ -12,30 +12,29 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 import ku.piii.model.MusicMediaColumnInfo;
 import ku.piii.model.MusicMediaPlaylist;
 import ku.piii.music.MusicService;
 import ku.piii.music.MusicServiceFactory;
+import ku.piii.player.MusicPlayer;
 
 public class FXMLController implements Initializable {
 
-    String pathScannedOnLoad = "../test-music-files/collection-A";
+    String collectionA = "../test-music-files";
+    String collectionB = "../test-music-files/collection-B";
     
     private final static MusicService MUSIC_SERVICE = MusicServiceFactory.getMusicServiceInstance();
 
@@ -46,6 +45,9 @@ public class FXMLController implements Initializable {
     private ObservableList<MusicMedia> dataForTableView;
     
     private final static List<MusicMediaPlaylist> playlists = new ArrayList<>();
+    
+    private MusicMediaCollection collection;
+    private MusicPlayer player;
    
     
     //FX Components
@@ -56,10 +58,14 @@ public class FXMLController implements Initializable {
     @FXML
     private TableView<MusicMedia> tableView;
     @FXML
-    private ListView playlistView;
+    private ListView playlistView, musicView;
+    //Play Controls
     @FXML
-    private ListView musicView;
-    
+    private Label songLabel, artistLabel, play, pause, previous, next; 
+    @FXML
+    private ContextMenu clickMenu;
+    @FXML
+    private MenuItem importMusic;
     //FX Functions
 
     @FXML
@@ -100,9 +106,8 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        final MusicMediaCollection collection = MUSIC_SERVICE
-                .createMusicMediaCollection(Paths.get(pathScannedOnLoad));
+        collection = MUSIC_SERVICE
+                .createMusicMediaCollection(Paths.get(collectionA));
         dataForTableView = FXCollections.observableArrayList(collection.getMusic());
         dataForTableView.addListener(makeChangeListener(collection));
         
@@ -110,20 +115,25 @@ public class FXMLController implements Initializable {
 
         tableView.setItems(dataForTableView);
         TableViewFactory.makeTable(tableView, songColumnInfo);
-        tableView.setEditable(true);
+        tableView.setContextMenu(clickMenu);
+        tableView.setOnMouseClicked(TABLE_CLICK);
         
-        ObservableList<String> musicOptions = FXCollections.observableArrayList (
-        "Songs", "Artists", "Albums", "Genres");
-        musicView.setItems(musicOptions);
-        musicView.setPrefHeight(musicOptions.size() * ROW_HEIGHT + 2);
+        musicView.setPrefHeight(musicView.getItems().size() * ROW_HEIGHT + 2);
         musicView.setOnMouseClicked(SELECT_MUSIC_MENU);
         
         playlistView.setEditable(true);
         playlistView.setCellFactory(TextFieldListCell.forListView());
         playlistView.setOnEditCommit(EDIT_PLAYLIST);
         
-        tableView.setOnMouseClicked(PLAY_MUSIC);
-         
+        player = new MusicPlayer(songLabel,artistLabel,play,pause);
+        
+        play.setOnMouseClicked(PLAY);
+        pause.setOnMouseClicked(PAUSE);
+        pause.setVisible(false);
+        previous.setOnMouseClicked(PREVIOUS_SONG);
+        next.setOnMouseClicked(NEXT_SONG); 
+        importMusic.setOnAction(IMPORT_MUSIC);
+        
     }
 
     private static ListChangeListener<MusicMedia> makeChangeListener(final MusicMediaCollection collection) {
@@ -146,10 +156,17 @@ public class FXMLController implements Initializable {
         };
     }
     
+    EventHandler<ActionEvent> IMPORT_MUSIC = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            
+        }
+        
+    };
+    
     EventHandler<MouseEvent> SELECT_MUSIC_MENU = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(musicView.getSelectionModel().getSelectedIndex());
                 switch(musicView.getSelectionModel().getSelectedIndex()) {
                     case 0:
                         break;
@@ -164,10 +181,47 @@ public class FXMLController implements Initializable {
             }
         };
     
-    EventHandler<MouseEvent> PLAY_MUSIC = new EventHandler<MouseEvent>() {
+    EventHandler<MouseEvent> TABLE_CLICK = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
             
+            if (event.isSecondaryButtonDown()) {
+                clickMenu.show(tableView, event.getScreenX(), event.getScreenY());
+            }
+            
+            if (event.getClickCount() == 2) {
+                player.setPlayQueue(collection);
+                int selected = tableView.getSelectionModel().getSelectedIndex();
+                player.play(selected);   
+            }            
+        }
+    };
+    
+    EventHandler<MouseEvent> PLAY = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            player.play();
+        }
+    };
+    
+    EventHandler<MouseEvent> PAUSE = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            player.pause();
+        }
+    };
+    
+    EventHandler<MouseEvent> PREVIOUS_SONG = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            player.previousTrack();
+        }
+    };
+    
+    EventHandler<MouseEvent> NEXT_SONG = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            player.nextTrack();
         }
     };
     

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.collections.*?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" hgap="10.0" vgap="10.0"
           fx:controller="ku.piii.musictableviewfxml.FXMLController">
@@ -36,6 +37,14 @@
             <GridPane fx:id="options" GridPane.rowIndex="1" >
                 <ListView fx:id="musicView" 
                     GridPane.rowIndex="0">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Songs" />
+                            <String fx:value="Artists" />
+                            <String fx:value="Albums" />
+                            <String fx:value="Genres" />
+                        </FXCollections>
+                    </items>
                 </ListView>
             </GridPane> 
            
@@ -59,38 +68,47 @@
            GridPane.rowSpan="2"  
            GridPane.hgrow="always"
            GridPane.vgrow="always">
+            <ContextMenu fx:id="clickMenu">
+                <items>
+                    <MenuItem text="Play"/>
+                    <Menu text="Add to...">
+                    </Menu>
+                    <MenuItem text="Go to Artist"/>
+                    <MenuItem text="Go to Album"/> 
+                </items>
+            </ContextMenu>
         </TableView>
         
     </GridPane>
-
-    <Button GridPane.rowIndex="2" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
+    
+    <GridPane GridPane.columnIndex="0"
+            GridPane.rowIndex="2"
+            GridPane.hgrow="always"
+            GridPane.vgrow="always">
+        
+        <Label GridPane.rowIndex="0" fx:id="songLabel"></Label>
+        <Label GridPane.rowIndex="1" fx:id="artistLabel"></Label>
+        <GridPane GridPane.columnIndex="0"
+                  GridPane.rowIndex="2"
+                  GridPane.hgrow="always"
+                  GridPane.vgrow="always" fx:id="playControls">
+            <Label GridPane.columnIndex="0"  GridPane.rowIndex="0" fx:id="previous">&#9194;</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play"> &#x23f5;</Label>
+            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause">&#x23f8;</Label>
+            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next">&#9193;</Label>
+            
+        </GridPane> 
+        
+        
+    </GridPane>
+    
     
   
-    <MenuBar fx:id="menuBar" onKeyPressed="#handleKeyInput">
+    <MenuBar fx:id="menuBar">
         <menus>
             <Menu text="File">
                 <items>
-                    <MenuItem text="New"/>
-                    <MenuItem text="Open"/>
-                    <MenuItem text="Save"/>
-                    <MenuItem text="Save As"/>
-                    <SeparatorMenuItem  />
-                    <MenuItem text="Exit"/>
-                </items>
-            </Menu>
-            <Menu text="Edit">
-                <items>
-                    <MenuItem text="Copy"/>
-                    <MenuItem text="Cut"/>
-                    <MenuItem text="Paste"/>
-                </items>
-            </Menu>
-            <Menu text="Help">
-                <items>
-                    <MenuItem text="Search" disable="true"/>
-                    <MenuItem text="Online Manual" visible="false"/>
-                    <SeparatorMenuItem />
-                    <MenuItem text="About" onAction="#handleAboutAction"/>
+                    <MenuItem text="Import Music"/>
                 </items>
             </Menu>
         </menus>
