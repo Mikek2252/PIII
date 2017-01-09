@@ -1,6 +1,7 @@
 package ku.piii.musictableviewfxml;
 
 import javafx.application.Application;
+
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +17,7 @@ public class MainApp extends Application {
         Scene scene = new Scene(parent);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("KerrTunes");
         stage.setScene(scene);
         stage.show();
     }

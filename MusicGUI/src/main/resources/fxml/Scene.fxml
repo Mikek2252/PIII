@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.collections.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import org.kordamp.ikonli.javafx.StackedFontIcon?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" hgap="10.0" vgap="10.0"
           fx:controller="ku.piii.musictableviewfxml.FXMLController">
@@ -92,11 +94,19 @@
                   GridPane.rowIndex="2"
                   GridPane.hgrow="always"
                   GridPane.vgrow="always" fx:id="playControls">
-            <Label GridPane.columnIndex="0"  GridPane.rowIndex="0" fx:id="previous">&#9194;</Label>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play"> &#x23f5;</Label>
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause">&#x23f8;</Label>
-            <Label GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next">&#9193;</Label>
-            
+                
+            <!--<GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="previous">-->
+                <FontIcon GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="previous" iconLiteral="fa-backward" iconColor="black"/>
+            <!--</GridPane>-->
+            <!--<GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play">-->
+                <FontIcon GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play" iconLiteral="fa-play" iconColor="black"/>
+            <!--</GridPane>-->
+<!--            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause">-->
+                <FontIcon GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause" iconLiteral="fa-pause" iconColor="black"/>
+<!--            </GridPane>-->
+            <!--<GridPane GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next">-->
+                <FontIcon GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next" iconLiteral="fa-forward" iconColor="black"/>
+            <!--</GridPane>-->
         </GridPane> 
         
         
@@ -108,7 +118,7 @@
         <menus>
             <Menu text="File">
                 <items>
-                    <MenuItem text="Import Music"/>
+                    <MenuItem fx:id="importMusic" text="Import Music"/>
                 </items>
             </Menu>
         </menus>

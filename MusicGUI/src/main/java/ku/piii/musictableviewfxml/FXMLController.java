@@ -23,6 +23,7 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 import ku.piii.model.MusicMediaColumnInfo;
@@ -30,6 +31,7 @@ import ku.piii.model.MusicMediaPlaylist;
 import ku.piii.music.MusicService;
 import ku.piii.music.MusicServiceFactory;
 import ku.piii.player.MusicPlayer;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class FXMLController implements Initializable {
 
@@ -61,26 +63,16 @@ public class FXMLController implements Initializable {
     private ListView playlistView, musicView;
     //Play Controls
     @FXML
-    private Label songLabel, artistLabel, play, pause, previous, next; 
+    private Label songLabel, artistLabel;
+    @FXML
+    private FontIcon play, previous, next, pause;
     @FXML
     private ContextMenu clickMenu;
     @FXML
     private MenuItem importMusic;
     //FX Functions
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        
-        
-        
 
-        // TODO
-    }
-
-    @FXML
-    private void handleAboutAction(final ActionEvent event) {
-
-    }
 
     @FXML
     private void createPlaylistAction(ActionEvent event) {

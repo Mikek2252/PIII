@@ -8,10 +8,13 @@ package ku.piii.player;
 import java.io.File;
 import java.util.Optional;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  *
@@ -23,9 +26,10 @@ public class MusicPlayer {
     private MediaPlayer mediaPlayer;
     private MusicMedia currentlyPlaying;
     
-    Label songLabel, artistLabel, play, pause;
+    Label songLabel, artistLabel;
+    FontIcon play, pause;
     
-    public MusicPlayer(Label songLabel, Label artistLabel, Label play, Label pause) {
+    public MusicPlayer(Label songLabel, Label artistLabel, FontIcon play, FontIcon pause) {
         this.songLabel = songLabel;
         this.artistLabel = artistLabel;
         this.play = play;
