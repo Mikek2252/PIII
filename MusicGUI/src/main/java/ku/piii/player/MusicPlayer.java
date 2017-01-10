@@ -26,12 +26,11 @@ public class MusicPlayer {
     private MediaPlayer mediaPlayer;
     private MusicMedia currentlyPlaying;
     
-    Label songLabel, artistLabel;
-    FontIcon play, pause;
+    Label infoLabel;
+    GridPane play, pause;
     
-    public MusicPlayer(Label songLabel, Label artistLabel, FontIcon play, FontIcon pause) {
-        this.songLabel = songLabel;
-        this.artistLabel = artistLabel;
+    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause) {
+        this.infoLabel = infoLabel;
         this.play = play;
         this.pause = pause;
     }
@@ -76,9 +75,7 @@ public class MusicPlayer {
         }
         
         currentlyPlaying = song;
-        songLabel.setText(currentlyPlaying.getTitle());
-        artistLabel.setText(currentlyPlaying.getArtist());
-               
+        infoLabel.setText(currentlyPlaying.getTitle()+" - "+currentlyPlaying.getArtist());        
         File songFile = new File(song.getPath());
         String songPath = songFile.toURI().toString();
         Media songURL = new Media(songPath);

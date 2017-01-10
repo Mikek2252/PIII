@@ -14,10 +14,14 @@
 }
 
 #playControls FontIcon {
-    -fx-font: normal 28 Tahoma;
-   -fx-padding: 5px;
-    -fx-border-insets: 5px;
-    -fx-background-insets: 5px;
-    -fx-margin: 5px;
+    -fx-font: normal 36 Tahoma;
+    -fx-padding: 10px;
+    -fx-border-insets: 10px;
+    -fx-background-insets: 10px;
+}
 
+#InfoLabel {
+    -fx-font: normal 18 Tahoma;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
 }
