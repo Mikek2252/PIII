@@ -6,15 +6,16 @@
 package ku.piii.player;
 
 import java.io.File;
-import java.util.Optional;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
+import javafx.util.Duration;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  *
@@ -28,11 +29,13 @@ public class MusicPlayer {
     
     Label infoLabel;
     GridPane play, pause;
+    Slider playBar;
     
-    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause) {
+    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause, Slider mediaBar) {
         this.infoLabel = infoLabel;
         this.play = play;
         this.pause = pause;
+        this.playBar = mediaBar;
     }
     
     public void setPlayQueue(MusicMediaCollection playQueue){
@@ -88,7 +91,15 @@ public class MusicPlayer {
                 mediaPlayer.stop();
                 nextTrack();
             }
-        });   
+        });
+        
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> ov, Duration t, Duration t1) {
+                Double newPos = t1.toSeconds()/songURL.getDuration().toSeconds();
+                playBar.setValue((int) Math.round(newPos*100));
+            }
+        });
     }
     public void nextTrack() {
         int trackNo = getTrackNo();
