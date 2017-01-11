@@ -6,12 +6,9 @@
 package ku.piii.player;
 
 import java.io.File;
-import java.util.Optional;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 import org.kordamp.ikonli.javafx.FontIcon;
