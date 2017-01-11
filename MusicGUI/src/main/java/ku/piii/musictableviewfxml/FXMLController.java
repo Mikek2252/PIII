@@ -15,8 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.InputEvent;
@@ -31,7 +31,6 @@ import ku.piii.model.MusicMediaPlaylist;
 import ku.piii.music.MusicService;
 import ku.piii.music.MusicServiceFactory;
 import ku.piii.player.MusicPlayer;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 public class FXMLController implements Initializable {
 
@@ -63,13 +62,15 @@ public class FXMLController implements Initializable {
     private ListView playlistView, musicView;
     //Play Controls
     @FXML
-    private Label songLabel, artistLabel;
+    private Label InfoLabel;
     @FXML
-    private FontIcon play, previous, next, pause;
+    private GridPane play, pause, previous, next;
     @FXML
     private ContextMenu clickMenu;
     @FXML
     private MenuItem importMusic;
+    @FXML
+    private Slider playBar;
     //FX Functions
 
 
@@ -117,10 +118,12 @@ public class FXMLController implements Initializable {
         playlistView.setCellFactory(TextFieldListCell.forListView());
         playlistView.setOnEditCommit(EDIT_PLAYLIST);
         
-        player = new MusicPlayer(songLabel,artistLabel,play,pause);
+        player = new MusicPlayer(InfoLabel,play,pause,playBar);
+        
         
         play.setOnMouseClicked(PLAY);
         pause.setOnMouseClicked(PAUSE);
+        pause.managedProperty().bind(pause.visibleProperty());
         pause.setVisible(false);
         previous.setOnMouseClicked(PREVIOUS_SONG);
         next.setOnMouseClicked(NEXT_SONG); 

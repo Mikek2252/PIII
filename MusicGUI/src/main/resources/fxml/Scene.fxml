@@ -74,6 +74,7 @@
                 <items>
                     <MenuItem text="Play"/>
                     <Menu text="Add to...">
+                        <MenuItem text="New Playlist"/>
                     </Menu>
                     <MenuItem text="Go to Artist"/>
                     <MenuItem text="Go to Album"/> 
@@ -81,36 +82,63 @@
             </ContextMenu>
         </TableView>
         
-    </GridPane>
-    
-    <GridPane GridPane.columnIndex="0"
-            GridPane.rowIndex="2"
+        <GridPane GridPane.columnIndex="1"
+            GridPane.rowIndex="3"
             GridPane.hgrow="always"
-            GridPane.vgrow="always">
-        
-        <Label GridPane.rowIndex="0" fx:id="songLabel"></Label>
-        <Label GridPane.rowIndex="1" fx:id="artistLabel"></Label>
+            GridPane.vgrow="always"
+            alignment="CENTER" >
+        <GridPane GridPane.columnIndex="0"
+                  GridPane.rowIndex="0"
+                  GridPane.hgrow="always"
+                  alignment="CENTER"
+                  GridPane.vgrow="always">
+            <Label fx:id="InfoLabel"></Label>
+        </GridPane>
+        <GridPane GridPane.columnIndex="0"
+                  GridPane.rowIndex="1"
+                  GridPane.hgrow="always"
+                  alignment="CENTER"
+                  GridPane.vgrow="always" fx:id="playControls">
+            <padding>
+                <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+            </padding>
+            <Slider fx:id="playBar" />
+        </GridPane>
         <GridPane GridPane.columnIndex="0"
                   GridPane.rowIndex="2"
                   GridPane.hgrow="always"
+                  alignment="CENTER"
                   GridPane.vgrow="always" fx:id="playControls">
                 
-            <!--<GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="previous">-->
-                <FontIcon GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="previous" iconLiteral="fa-backward" iconColor="black"/>
-            <!--</GridPane>-->
-            <!--<GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play">-->
-                <FontIcon GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play" iconLiteral="fa-play" iconColor="black"/>
-            <!--</GridPane>-->
-<!--            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause">-->
-                <FontIcon GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause" iconLiteral="fa-pause" iconColor="black"/>
-<!--            </GridPane>-->
-            <!--<GridPane GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next">-->
-                <FontIcon GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next" iconLiteral="fa-forward" iconColor="black"/>
-            <!--</GridPane>-->
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="previous">
+                <padding>
+                    <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                </padding>
+                <FontIcon iconLiteral="fa-backward" iconColor="black"/>  
+            </GridPane>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="play" >
+                <padding>
+                    <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                </padding>
+                <FontIcon  iconLiteral="fa-play" iconColor="black"/>
+            </GridPane>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="pause" >
+                <padding>
+                    <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                </padding>
+                <FontIcon iconLiteral="fa-pause" iconColor="black"/>
+            </GridPane>
+            <GridPane GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="next" >
+                <padding>
+                    <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                </padding>
+                <FontIcon iconLiteral="fa-forward" iconColor="black"/>
+            </GridPane>
         </GridPane> 
-        
-        
     </GridPane>
+    </GridPane>
+    
+    
     
     
   

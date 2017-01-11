@@ -6,12 +6,22 @@
 package ku.piii.player;
 
 import java.io.File;
+<<<<<<< HEAD
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+=======
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+>>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  *
@@ -23,14 +33,15 @@ public class MusicPlayer {
     private MediaPlayer mediaPlayer;
     private MusicMedia currentlyPlaying;
     
-    Label songLabel, artistLabel;
-    FontIcon play, pause;
+    Label infoLabel;
+    GridPane play, pause;
+    Slider playBar;
     
-    public MusicPlayer(Label songLabel, Label artistLabel, FontIcon play, FontIcon pause) {
-        this.songLabel = songLabel;
-        this.artistLabel = artistLabel;
+    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause, Slider mediaBar) {
+        this.infoLabel = infoLabel;
         this.play = play;
         this.pause = pause;
+        this.playBar = mediaBar;
     }
     
     public void setPlayQueue(MusicMediaCollection playQueue){
@@ -73,9 +84,7 @@ public class MusicPlayer {
         }
         
         currentlyPlaying = song;
-        songLabel.setText(currentlyPlaying.getTitle());
-        artistLabel.setText(currentlyPlaying.getArtist());
-               
+        infoLabel.setText(currentlyPlaying.getTitle()+" - "+currentlyPlaying.getArtist());        
         File songFile = new File(song.getPath());
         String songPath = songFile.toURI().toString();
         Media songURL = new Media(songPath);
@@ -88,7 +97,15 @@ public class MusicPlayer {
                 mediaPlayer.stop();
                 nextTrack();
             }
-        });   
+        });
+        
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> ov, Duration t, Duration t1) {
+                Double newPos = t1.toSeconds()/songURL.getDuration().toSeconds();
+                playBar.setValue((int) Math.round(newPos*100));
+            }
+        });
     }
     public void nextTrack() {
         int trackNo = getTrackNo();

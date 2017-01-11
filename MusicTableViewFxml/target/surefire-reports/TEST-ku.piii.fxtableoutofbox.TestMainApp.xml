@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<<<<<<< HEAD
 <testsuite tests="1" failures="0" name="ku.piii.fxtableoutofbox.TestMainApp" time="3.053" errors="0" skipped="0">
+=======
+<testsuite tests="1" failures="0" name="ku.piii.fxtableoutofbox.TestMainApp" time="3.838" errors="0" skipped="0">
+>>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_111\jre\bin"/>
@@ -29,7 +33,11 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.1\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
+<<<<<<< HEAD
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_111\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32\wbem;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files\Common Files\Autodesk Shared;C:\Program Files (x86)\Autodesk\Backburner;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;\tools;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;E:\Android\ADT\SDK\platform-tools\;E:\cocos2D-x\Apache_ant\bin;E:\Python27;C:\Program Files\TortoiseGit\bin;C:\Program Files (x86)\AMD\ATI.ACE\Core-Static;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\Skype\Phone\;E:\cocos2D-x\cocos2d-x-3.3\templates;E:\cocos2D-x\cocos2d-x-3.3\tools\cocos2d-console\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Users\Mike\AppData\Local\Microsoft\WindowsApps;;."/>
+=======
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_92\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files (x86)\Common Files\Microsoft Shared\Microsoft Online Services;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\Program Files (x86)\Microsoft Application Virtualization Client;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Box\Box Edit\;%USERPROFILE%\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\{76d1d8ca-30da-4de2-9620-53a4e62ba0c8};C:\Program Files\TortoiseGit\bin;."/>
+>>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -61,5 +69,9 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
+<<<<<<< HEAD
   <testcase classname="ku.piii.fxtableoutofbox.TestMainApp" name="isTableViewListCorrect" time="2.707"/>
+=======
+  <testcase classname="ku.piii.fxtableoutofbox.TestMainApp" name="isTableViewListCorrect" time="3.055"/>
+>>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
 </testsuite>
