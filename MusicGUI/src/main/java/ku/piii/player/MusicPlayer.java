@@ -6,11 +6,6 @@
 package ku.piii.player;
 
 import java.io.File;
-<<<<<<< HEAD
-import javafx.scene.control.Label;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-=======
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
@@ -19,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
->>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 
@@ -33,15 +27,17 @@ public class MusicPlayer {
     private MediaPlayer mediaPlayer;
     private MusicMedia currentlyPlaying;
     
-    Label infoLabel;
+    Label infoLabel, cTimeLabel, tLeftLabel;
     GridPane play, pause;
     Slider playBar;
     
-    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause, Slider mediaBar) {
+    public MusicPlayer(Label infoLabel, GridPane play, GridPane pause, Slider mediaBar, Label cTimeLabel, Label tLeftLabel) {
         this.infoLabel = infoLabel;
         this.play = play;
         this.pause = pause;
         this.playBar = mediaBar;
+        this.cTimeLabel = cTimeLabel;
+        this.tLeftLabel = tLeftLabel;
     }
     
     public void setPlayQueue(MusicMediaCollection playQueue){
@@ -104,6 +100,9 @@ public class MusicPlayer {
             public void changed(ObservableValue<? extends Duration> ov, Duration t, Duration t1) {
                 Double newPos = t1.toSeconds()/songURL.getDuration().toSeconds();
                 playBar.setValue((int) Math.round(newPos*100));
+                int timeLeft = (int) Math.round(songURL.getDuration().toSeconds() - t1.toSeconds());
+                tLeftLabel.setText("-"+timeToString(timeLeft));
+                cTimeLabel.setText(timeToString((int)Math.round(t1.toSeconds())));
             }
         });
     }
@@ -123,5 +122,14 @@ public class MusicPlayer {
     
     public int getTrackNo() {
         return playQueue.getMusic().indexOf(currentlyPlaying);
+    }
+    
+    private String timeToString(int time) {
+        int minutes = (int) Math.floor(time/60);
+        int seconds = (int) (Math.round(time) - (minutes*60));
+        String timeMid;
+        if (seconds < 10 && seconds >= 0) timeMid = ":0";
+        else timeMid = ":";
+        return (minutes + timeMid + seconds);
     }
 }

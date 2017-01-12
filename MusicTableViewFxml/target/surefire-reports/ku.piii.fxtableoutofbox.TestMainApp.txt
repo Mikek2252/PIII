@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ku.piii.fxtableoutofbox.TestMainApp
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.053 sec
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.866 sec
->>>>>>> 5343e55c95d29e8bffbe5bc1c374e408c1b513e7
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.041 sec

@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
@@ -24,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import ku.piii.lastfm.Lastfm;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 import ku.piii.model.MusicMediaColumnInfo;
@@ -62,7 +64,7 @@ public class FXMLController implements Initializable {
     private ListView playlistView, musicView;
     //Play Controls
     @FXML
-    private Label InfoLabel;
+    private Label InfoLabel,cTime,timeLeft;
     @FXML
     private GridPane play, pause, previous, next;
     @FXML
@@ -110,6 +112,32 @@ public class FXMLController implements Initializable {
         TableViewFactory.makeTable(tableView, songColumnInfo);
         tableView.setContextMenu(clickMenu);
         tableView.setOnMouseClicked(TABLE_CLICK);
+        //Play button on menu
+        MenuItem menuPlay = clickMenu.getItems().get(0);
+        Menu menuPlaylist = (Menu) clickMenu.getItems().get(1);
+        MenuItem menuArtist = clickMenu.getItems().get(2);
+        MenuItem menuAlbum = clickMenu.getItems().get(3);
+        
+        menuPlay.setOnAction( new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                player.play(tableView.getSelectionModel().getSelectedItem());
+            }
+        });
+        menuArtist.setOnAction( new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String artist = tableView.getSelectionModel().getSelectedItem().getArtist();
+            }
+        });
+        menuAlbum.setOnAction( new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String album = tableView.getSelectionModel().getSelectedItem().getAlbum();
+            }
+        });
+        
+        Lastfm lastfm = new Lastfm();
         
         musicView.setPrefHeight(musicView.getItems().size() * ROW_HEIGHT + 2);
         musicView.setOnMouseClicked(SELECT_MUSIC_MENU);
@@ -118,7 +146,7 @@ public class FXMLController implements Initializable {
         playlistView.setCellFactory(TextFieldListCell.forListView());
         playlistView.setOnEditCommit(EDIT_PLAYLIST);
         
-        player = new MusicPlayer(InfoLabel,play,pause,playBar);
+        player = new MusicPlayer(InfoLabel,play,pause,playBar,cTime,timeLeft);
         
         
         play.setOnMouseClicked(PLAY);

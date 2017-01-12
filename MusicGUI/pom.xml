@@ -47,6 +47,11 @@
             <artifactId>ikonli-fontawesome-pack</artifactId>
             <version>1.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
     </dependencies>
     
     <repositories>

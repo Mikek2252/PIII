@@ -10,7 +10,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import org.kordamp.ikonli.javafx.StackedFontIcon?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" hgap="10.0" vgap="10.0"
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" hgap="10.0" vgap="10.0"
           fx:controller="ku.piii.musictableviewfxml.FXMLController">
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -64,26 +64,34 @@
             </ListView>
             <Button GridPane.rowIndex="3" text="Create Playlist" onAction="#createPlaylistAction" fx:id="playlist" />
         </GridPane> 
-        
-        <TableView fx:id="tableView" 
-           GridPane.columnIndex="1"
-           GridPane.rowSpan="2"  
-           GridPane.hgrow="always"
-           GridPane.vgrow="always">
-            <ContextMenu fx:id="clickMenu">
-                <items>
-                    <MenuItem text="Play"/>
-                    <Menu text="Add to...">
-                        <MenuItem text="New Playlist"/>
-                    </Menu>
-                    <MenuItem text="Go to Artist"/>
-                    <MenuItem text="Go to Album"/> 
-                </items>
-            </ContextMenu>
-        </TableView>
-        
+        <!-- ALL music table view-->
         <GridPane GridPane.columnIndex="1"
-            GridPane.rowIndex="3"
+                  GridPane.rowIndex="0"
+                  GridPane.hgrow="always"
+                  GridPane.vgrow="always" >
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="0">My Music</Label>  
+            <TableView fx:id="tableView" 
+                GridPane.columnIndex="0"
+                GridPane.rowIndex="0"   
+                GridPane.hgrow="always"
+                GridPane.vgrow="always">
+                <ContextMenu fx:id="clickMenu">
+                    <items>
+                        <MenuItem text="Play"/>
+                        <Menu text="Add to...">
+                            <MenuItem text="New Playlist"/>
+                        </Menu>
+                        <MenuItem text="Go to Artist"/>
+                        <MenuItem text="Go to Album"/> 
+                    </items>
+                </ContextMenu>
+            </TableView>
+        </GridPane>
+        
+    </GridPane>
+    
+    <GridPane GridPane.columnIndex="0"
+            GridPane.rowIndex="2"
             GridPane.hgrow="always"
             GridPane.vgrow="always"
             alignment="CENTER" >
@@ -98,11 +106,17 @@
                   GridPane.rowIndex="1"
                   GridPane.hgrow="always"
                   alignment="CENTER"
-                  GridPane.vgrow="always" fx:id="playControls">
+                  GridPane.vgrow="always">
             <padding>
                 <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
             </padding>
-            <Slider fx:id="playBar" />
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS" GridPane.hgrow="ALWAYS" >
+                <Label GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="cTime">0:00</Label>
+                <Slider GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="always"
+                  GridPane.vgrow="always" fx:id="playBar" /> 
+                <Label GridPane.columnIndex="2" GridPane.rowIndex="0" fx:id="timeLeft">-0:00</Label>
+            </GridPane> 
+            
         </GridPane>
         <GridPane GridPane.columnIndex="0"
                   GridPane.rowIndex="2"
@@ -136,8 +150,6 @@
             </GridPane>
         </GridPane> 
     </GridPane>
-    </GridPane>
-    
     
     
     
