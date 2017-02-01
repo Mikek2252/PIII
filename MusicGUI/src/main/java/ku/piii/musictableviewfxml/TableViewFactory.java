@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import ku.piii.lastfm.Track;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaColumnInfo;
 
@@ -23,9 +24,26 @@ import ku.piii.model.MusicMediaColumnInfo;
  */
 @SuppressWarnings("restriction")
 public class TableViewFactory {
-
     
-    static public void processInput(MusicMedia editItem, String newValue, String editProperty)
+    
+    
+    public static List<MusicMediaColumnInfo> makeAlbumInfoList() {
+        List<MusicMediaColumnInfo> myColumnInfoList = new ArrayList<MusicMediaColumnInfo>();
+        myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Track Name")
+                                             .setMinWidth(200)
+                                             .setProperty("name")
+        );
+        myColumnInfoList.add(new MusicMediaColumnInfo().setHeading("Duration")
+                                             .setMinWidth(50)
+                                             .setProperty("duration")
+        );
+        
+        return myColumnInfoList;
+    }
+    
+    
+    
+    static public <T> void processInput(T editItem, String newValue, String editProperty)
     {
         System.out.println("New value is " + newValue + " for property " + editProperty);
     }
@@ -69,9 +87,14 @@ public class TableViewFactory {
 //    private String genre;
     
     
+//    static public void makeAlbumTable(TableView<Track> tableView, List<MusicMediaColumnInfo> myColumnInfoList ) {
+//        for(final MusicMediaColumnInfo myColumnInfo : myColumnInfoList) {
+//            TableColumn thisCOlumn = new 
+//        } 
+//    }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	static public void  makeTable(TableView<MusicMedia>      tableView, 
+	static public <T> void  makeTable(TableView<T>      tableView, 
                                       List<MusicMediaColumnInfo> myColumnInfoList )
     {
         
@@ -83,18 +106,18 @@ public class TableViewFactory {
             thisColumn.setMinWidth(myColumnInfo.getMinWidth());
                
             thisColumn.setCellValueFactory(
-                new PropertyValueFactory<MusicMedia, String>(myColumnInfo.getProperty())
+                new PropertyValueFactory<T, String>(myColumnInfo.getProperty())
             );
             thisColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             
             thisColumn.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<MusicMedia, String>>() {
+                new EventHandler<TableColumn.CellEditEvent<T, String>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<MusicMedia, 
+                    public void handle(TableColumn.CellEditEvent<T, 
                                        String> editEvent) {
                     
                         int editRow = editEvent.getTablePosition().getRow();
-                        MusicMedia editItem = editEvent.getTableView()
+                        T editItem = editEvent.getTableView()
                                                         .getItems()
                                                         .get(editRow);                    
                         processInput(editItem, 

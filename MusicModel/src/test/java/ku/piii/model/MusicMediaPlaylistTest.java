@@ -14,6 +14,7 @@ import org.junit.Test;
 public class MusicMediaPlaylistTest {
     
     
+    
     @Test(expected=IllegalArgumentException.class)
     public void newNameIsNull() {
         String name = null;

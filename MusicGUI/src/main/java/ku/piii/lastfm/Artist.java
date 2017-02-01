@@ -11,13 +11,31 @@ import java.util.List;
  *
  * @author Mike
  */
-class Artist {
+public class Artist {
     private String name;
     private String imgURL;
     private int listeners;
     private int playCount;
     private List<String> tags;
     private String bioSummary;
+    private List<Track> tracks;
+    private List<Album> albums;
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
 
     public String getName() {
         return name;

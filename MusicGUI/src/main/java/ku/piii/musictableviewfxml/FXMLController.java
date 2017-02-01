@@ -1,31 +1,42 @@
 package ku.piii.musictableviewfxml;
 
+import java.io.File;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import ku.piii.lastfm.Lastfm;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import ku.piii.lastfm.*;
 import ku.piii.model.MusicMedia;
 import ku.piii.model.MusicMediaCollection;
 import ku.piii.model.MusicMediaColumnInfo;
@@ -51,6 +62,7 @@ public class FXMLController implements Initializable {
     
     private MusicMediaCollection collection;
     private MusicPlayer player;
+    private LastFM lastFM;
    
     
     //FX Components
@@ -73,6 +85,23 @@ public class FXMLController implements Initializable {
     private MenuItem importMusic;
     @FXML
     private Slider playBar;
+    @FXML
+    private GridPane songView;
+    
+    
+    //ArtistView ID's
+    @FXML
+    private Label artistTitle, albumTitle,listeners, playCount;
+    @FXML
+    private TextArea biography;
+    @FXML
+    private ImageView artistImage;
+    @FXML
+    private TableView<Track> albumTable;
+    @FXML
+    private ListView albumList, topTrackList;
+    @FXML 
+    private GridPane artistView;
     //FX Functions
 
 
@@ -110,6 +139,8 @@ public class FXMLController implements Initializable {
 
         tableView.setItems(dataForTableView);
         TableViewFactory.makeTable(tableView, songColumnInfo);
+        TableViewFactory.makeTable(albumTable, TableViewFactory.makeAlbumInfoList());
+        
         tableView.setContextMenu(clickMenu);
         tableView.setOnMouseClicked(TABLE_CLICK);
         //Play button on menu
@@ -124,12 +155,8 @@ public class FXMLController implements Initializable {
                 player.play(tableView.getSelectionModel().getSelectedItem());
             }
         });
-        menuArtist.setOnAction( new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String artist = tableView.getSelectionModel().getSelectedItem().getArtist();
-            }
-        });
+        
+        menuArtist.setOnAction( SHOW_ARTIST );
         menuAlbum.setOnAction( new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -137,7 +164,9 @@ public class FXMLController implements Initializable {
             }
         });
         
-        Lastfm lastfm = new Lastfm();
+        lastFM = new LastFM();
+        
+        songView.setVisible(true);
         
         musicView.setPrefHeight(musicView.getItems().size() * ROW_HEIGHT + 2);
         musicView.setOnMouseClicked(SELECT_MUSIC_MENU);
@@ -145,9 +174,8 @@ public class FXMLController implements Initializable {
         playlistView.setEditable(true);
         playlistView.setCellFactory(TextFieldListCell.forListView());
         playlistView.setOnEditCommit(EDIT_PLAYLIST);
-        
+        playlistView.setOnEditCommit(SHOW_ARTIST);
         player = new MusicPlayer(InfoLabel,play,pause,playBar,cTime,timeLeft);
-        
         
         play.setOnMouseClicked(PLAY);
         pause.setOnMouseClicked(PAUSE);
@@ -157,6 +185,40 @@ public class FXMLController implements Initializable {
         next.setOnMouseClicked(NEXT_SONG); 
         importMusic.setOnAction(IMPORT_MUSIC);
         
+        //ArtistView 
+        biography.setWrapText(true);
+        biography.setEditable(false);
+        
+        albumList.setCellFactory(param -> {
+            return new ListCell<Album>() {
+                @Override
+                protected void updateItem(Album album, boolean empty) {
+                    super.updateItem(album, empty);
+                    
+                    if (empty || album == null || album.getName() == null) {
+                        setText(null);
+                    } else {
+                        setText(album.getName());
+                    }
+                }
+            };
+        });
+        topTrackList.setCellFactory( param -> { 
+            return new ListCell<Track>() { 
+                @Override
+                protected void updateItem(Track track, boolean empty) {
+                    super.updateItem(track, empty);
+                    if (empty || track == null || track.getName() == null) {
+                        setText(null);
+                    } else {
+                        setText(track.getName());
+                    }
+                }
+            };
+        });
+        tableView.setVisible(true);
+        artistView.setVisible(false);
+        albumList.setOnMouseClicked(GET_ALBUM);
     }
 
     private static ListChangeListener<MusicMedia> makeChangeListener(final MusicMediaCollection collection) {
@@ -182,7 +244,14 @@ public class FXMLController implements Initializable {
     EventHandler<ActionEvent> IMPORT_MUSIC = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            
+            DirectoryChooser chooser = new DirectoryChooser();
+            File file = chooser.showDialog(new Stage());
+            if (file != null ) {
+            MusicMediaCollection NewCollection = MUSIC_SERVICE
+                    .createMusicMediaCollection(Paths.get(file.getAbsolutePath()));
+            collection.getMusic().addAll(NewCollection.getMusic());
+            dataForTableView.addAll(NewCollection.getMusic());
+            }
         }
         
     };
@@ -190,8 +259,12 @@ public class FXMLController implements Initializable {
     EventHandler<MouseEvent> SELECT_MUSIC_MENU = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                System.out.print("hello");
                 switch(musicView.getSelectionModel().getSelectedIndex()) {
                     case 0:
+                        
+                        songView.setVisible(true);
+                        artistView.setVisible(false);
                         break;
                     case 1:
                         break;
@@ -248,11 +321,42 @@ public class FXMLController implements Initializable {
         }
     };
     
+    EventHandler<MouseEvent> GET_ALBUM = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            Album album = (Album) albumList.getSelectionModel().getSelectedItem();
+            Album fullAlbum = lastFM.getAlbum(album.getName(), album.getArtist());
+            albumTitle.setText(fullAlbum.getName());
+            albumTable.setItems(FXCollections.observableArrayList(fullAlbum.getTracks()));
+        }
+    };
+    
     EventHandler<ListView.EditEvent<String>> EDIT_PLAYLIST = new EventHandler<ListView.EditEvent<String>>() {
 	@Override
             public void handle(ListView.EditEvent<String> t) {
                 t.getSource().getItems().set(t.getIndex(), t.getNewValue());
             }
 	};
-
+    
+    //ArtistView
+    EventHandler<ActionEvent> SHOW_ARTIST = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+            MusicMedia media = tableView.getSelectionModel().getSelectedItem();
+//            MusicMedia media = collection.getMusic().get(1);
+            Artist artist = lastFM.getArtistInfo(media.getArtist());
+            
+            artistTitle.setText(artist.getName());
+            biography.setText(artist.getBioSummary());
+            artistImage.setImage(new Image(artist.getImgURL()));
+            albumList.setItems(FXCollections.observableArrayList(artist.getAlbums()));
+            topTrackList.setItems(FXCollections.observableArrayList(artist.getTracks()));
+            playCount.setText("Play Count: "+artist.getPlayCount());
+            listeners.setText("Listeners: "+artist.getListeners());
+            
+            songView.setVisible(false);
+            artistView.setVisible(true);
+        }
+    };
+    
 }
